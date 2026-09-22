@@ -1,0 +1,44 @@
+# Render blueprint - https://render.com/docs/blueprint-spec
+#
+# One Docker web service running JSON Server + the Node API + the built Angular
+# client. Deploy with: Render dashboard -> New -> Blueprint -> pick this repo.
+#
+# Only ever run ONE instance: games, rooms and the matchmaking queue live in
+# that process's memory (see "Known limitations" in the README).
+
+services:
+  - type: web
+    name: uno-arena
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: oregon
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      # The server refuses to boot in production without a strong secret.
+      - key: JWT_SECRET
+        generateValue: true
+      # Points at the mounted disk below, so games survive a redeploy.
+      - key: DB_PATH
+        value: /data/db.json
+      # Same-origin deployment, so this is simply the service's own URL.
+      - key: CLIENT_URL
+        fromService:
+          type: web
+          name: uno-arena
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: TURN_TIMEOUT_SECONDS
+        value: 30
+      - key: RECONNECT_GRACE_SECONDS
+        value: 60
+    # A disk keeps db.json across deploys. Remove this block on the free plan,
+    # where disks are unavailable - the database then resets on every deploy.
+    disk:
+      name: uno-arena-data
+      mountPath: /data
+      sizeGB: 1

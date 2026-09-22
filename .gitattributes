@@ -1,0 +1,14 @@
+# Keep line endings deterministic: the repo stores LF, Windows checkouts get
+# native endings, and anything executed on Linux (CI, Docker, shell scripts)
+# stays LF regardless of the machine that committed it.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+
+package-lock.json -diff linguist-generated

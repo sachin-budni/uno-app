@@ -1,0 +1,39 @@
+{
+  "name": "uno-arena",
+  "version": "1.0.0",
+  "private": true,
+  "description": "UNO Arena - real-time multiplayer UNO-style card game (Angular 20 + Node.js + Socket.IO + JSON Server)",
+  "workspaces": [
+    "apps/server",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n \"json-server,server,web\" -c \"magenta,cyan,green\" \"npm:dev:json\" \"npm:dev:server\" \"npm:dev:web\"",
+    "dev:json": "json-server --watch data/db.json --port 3001 --host 127.0.0.1 --quiet",
+    "dev:server": "npm run dev --workspace @uno-arena/server",
+    "dev:web": "npm run start --workspace @uno-arena/web",
+    "build": "npm run build --workspace @uno-arena/server && npm run build --workspace @uno-arena/web",
+    "build:server": "npm run build --workspace @uno-arena/server",
+    "build:web": "npm run build --workspace @uno-arena/web",
+    "start": "concurrently -k -n \"json-server,server\" -c \"magenta,cyan\" \"npm:dev:json\" \"npm:start:server\"",
+    "start:prod": "node scripts/start-production.mjs",
+    "start:server": "npm run start --workspace @uno-arena/server",
+    "test": "npm run test --workspace @uno-arena/server && npm run test --workspace @uno-arena/web",
+    "test:server": "npm run test --workspace @uno-arena/server",
+    "test:web": "npm run test --workspace @uno-arena/web",
+    "smoke": "node scripts/smoke-test.mjs",
+    "lint": "npm run lint --workspace @uno-arena/server && npm run lint --workspace @uno-arena/web",
+    "typecheck": "npm run typecheck --workspace @uno-arena/server && npm run typecheck --workspace @uno-arena/web",
+    "db:reset": "node scripts/reset-db.mjs",
+    "postinstall": "node scripts/ensure-db.mjs"
+  },
+  "dependencies": {
+    "json-server": "0.17.4"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}

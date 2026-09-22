@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.angular/
+coverage/
+.env
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+data/db.backup-*.json
+apps/web/.angular/

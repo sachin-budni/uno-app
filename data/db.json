@@ -1,0 +1,84 @@
+{
+  "users": [
+    {
+      "id": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+      "username": "sachin",
+      "usernameLower": "sachin",
+      "email": "sachinswapna143@gmail.com",
+      "emailLower": "sachinswapna143@gmail.com",
+      "passwordHash": "$2a$10$HZ7FneSYPuHr1fJXLWlYO.ywdj/9LSmCM0oXsZ/Jdo5yJ7uHb83L2",
+      "avatar": "fox",
+      "stats": {
+        "gamesPlayed": 0,
+        "gamesWon": 0,
+        "gamesLost": 0,
+        "unoCalls": 0,
+        "longestWinStreak": 0,
+        "currentWinStreak": 0,
+        "totalCardsPlayed": 0,
+        "totalPoints": 0
+      },
+      "createdAt": "2026-09-22T01:49:57.786Z",
+      "updatedAt": "2026-09-22T01:49:57.786Z"
+    },
+    {
+      "id": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+      "username": "Sachinbudni",
+      "usernameLower": "sachinbudni",
+      "email": "sachinbudnibnt@gmail.com",
+      "emailLower": "sachinbudnibnt@gmail.com",
+      "passwordHash": "$2a$10$FrXoSs9KzV/w2Vyj.ypyN.Rd75bf3MgWMUuLnjgZlHSNd83LMim9W",
+      "avatar": "wolf",
+      "stats": {
+        "gamesPlayed": 0,
+        "gamesWon": 0,
+        "gamesLost": 0,
+        "unoCalls": 0,
+        "longestWinStreak": 0,
+        "currentWinStreak": 0,
+        "totalCardsPlayed": 0,
+        "totalPoints": 0
+      },
+      "createdAt": "2026-09-22T01:50:22.537Z",
+      "updatedAt": "2026-09-22T01:50:22.537Z"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "9a88de39-f89f-4f67-8414-7f147391509b",
+      "code": "9ZVC33",
+      "name": "SRA",
+      "hostId": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+      "maxPlayers": 2,
+      "mode": "classic",
+      "isPrivate": true,
+      "status": "playing",
+      "players": [
+        {
+          "id": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+          "username": "Sachinbudni",
+          "avatar": "wolf",
+          "isReady": true,
+          "isConnected": true,
+          "isHost": true,
+          "joinedAt": "2026-09-22T01:50:57.488Z"
+        },
+        {
+          "id": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "username": "sachin",
+          "avatar": "fox",
+          "isReady": true,
+          "isConnected": true,
+          "isHost": false,
+          "joinedAt": "2026-09-22T01:51:05.108Z"
+        }
+      ],
+      "createdAt": "2026-09-22T01:50:57.488Z",
+      "updatedAt": "2026-09-22T01:51:09.302Z",
+      "gameId": "ca9710f7-52f4-4fe1-8cf1-f975ab73af45"
+    }
+  ],
+  "games": [],
+  "gameHistory": [],
+  "leaderboard": []
+}

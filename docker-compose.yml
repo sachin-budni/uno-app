@@ -1,0 +1,58 @@
+# UNO Arena - three services, no database.
+#
+#   json-server : the only persistence layer (data/db.json on a bind mount)
+#   server      : Express + Socket.IO + the authoritative game engine
+#   web         : nginx serving the built Angular client and proxying to server
+#
+# Start with:  docker compose up --build
+# Then open:   http://localhost:4200
+
+services:
+  json-server:
+    image: node:22-alpine
+    working_dir: /data
+    # `npx --yes` pins the same version the repo uses so the REST shape matches.
+    command: npx --yes json-server@0.17.4 --watch db.json --port 3001 --host 0.0.0.0
+    volumes:
+      - ./data:/data
+    expose:
+      - '3001'
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:3001/users']
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: '3000'
+      JSON_SERVER_URL: http://json-server:3001
+      # Override this. The server refuses to start in production without a
+      # strong secret of its own.
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET to a long random string}
+      CLIENT_URL: ${CLIENT_URL:-http://localhost:4200}
+      TURN_TIMEOUT_SECONDS: ${TURN_TIMEOUT_SECONDS:-30}
+      MAX_PLAYERS: ${MAX_PLAYERS:-4}
+      RECONNECT_GRACE_SECONDS: ${RECONNECT_GRACE_SECONDS:-60}
+    depends_on:
+      json-server:
+        condition: service_healthy
+    expose:
+      - '3000'
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - '4200:80'
+    depends_on:
+      - server
+    restart: unless-stopped

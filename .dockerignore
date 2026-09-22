@@ -1,0 +1,12 @@
+node_modules
+**/node_modules
+dist
+**/dist
+.angular
+**/.angular
+coverage
+**/coverage
+.git
+.env
+*.log
+data/db.backup-*.json
