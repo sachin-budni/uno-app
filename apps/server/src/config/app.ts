@@ -13,6 +13,12 @@ export function corsOrigin(origin: string | undefined, callback: (err: Error | n
   // Same-origin requests and non-browser clients send no Origin header.
   if (!origin) return callback(null, true);
   if (config.clientUrls.includes(origin)) return callback(null, true);
+
+  // In development the dev server listens on every interface, so the origin is
+  // whatever address the tester typed - a LAN IP when checking on a phone.
+  // Production stays on the CLIENT_URL allowlist.
+  if (!config.isProduction) return callback(null, true);
+
   callback(new Error(`Origin ${origin} is not allowed by CORS.`));
 }
 

@@ -178,6 +178,7 @@ Everything is optional in development — the defaults in `.env.example` work as
 | Variable                             | Default                 | What it does                                        |
 | ------------------------------------ | ----------------------- | --------------------------------------------------- |
 | `PORT`                               | `3000`                  | Node API port                                       |
+| `HOST`                               | `0.0.0.0`               | Interface to bind; `127.0.0.1` keeps it off the LAN |
 | `NODE_ENV`                           | `development`           | `production` enables strict secret checking         |
 | `JSON_SERVER_URL`                    | `http://127.0.0.1:3001` | Where the persistence layer lives                   |
 | `JWT_SECRET`                         | dev-only fallback       | Token signing key. **Set this in production.**      |

@@ -53,6 +53,12 @@ export const config = {
   isProduction,
   isTest,
   port: int('PORT', 3000),
+  /**
+   * Interface to bind. 0.0.0.0 is required in a container - a process bound to
+   * 127.0.0.1 is unreachable from outside it, so platform health checks fail.
+   * Set HOST=127.0.0.1 to keep a local run off the network.
+   */
+  host: str('HOST', '0.0.0.0'),
 
   jsonServerUrl: str('JSON_SERVER_URL', 'http://127.0.0.1:3001').replace(/\/+$/, ''),
   jsonServerTimeoutMs: int('JSON_SERVER_TIMEOUT_MS', 8000),

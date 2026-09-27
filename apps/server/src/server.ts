@@ -14,8 +14,9 @@ async function bootstrap(): Promise<void> {
 
   roomService.startCleanup();
 
-  httpServer.listen(config.port, () => {
+  httpServer.listen(config.port, config.host, () => {
     logger.info('Server started', {
+      host: config.host,
       port: config.port,
       env: config.nodeEnv,
       clientOrigins: config.clientUrls,
