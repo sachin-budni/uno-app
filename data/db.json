@@ -9,17 +9,17 @@
       "passwordHash": "$2a$10$HZ7FneSYPuHr1fJXLWlYO.ywdj/9LSmCM0oXsZ/Jdo5yJ7uHb83L2",
       "avatar": "fox",
       "stats": {
-        "gamesPlayed": 0,
-        "gamesWon": 0,
+        "gamesPlayed": 1,
+        "gamesWon": 1,
         "gamesLost": 0,
-        "unoCalls": 0,
-        "longestWinStreak": 0,
-        "currentWinStreak": 0,
-        "totalCardsPlayed": 0,
-        "totalPoints": 0
+        "unoCalls": 1,
+        "currentWinStreak": 1,
+        "longestWinStreak": 1,
+        "totalCardsPlayed": 11,
+        "totalPoints": 13
       },
       "createdAt": "2026-09-22T01:49:57.786Z",
-      "updatedAt": "2026-09-22T01:49:57.786Z"
+      "updatedAt": "2026-09-27T10:22:25.510Z"
     },
     {
       "id": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
@@ -30,17 +30,17 @@
       "passwordHash": "$2a$10$FrXoSs9KzV/w2Vyj.ypyN.Rd75bf3MgWMUuLnjgZlHSNd83LMim9W",
       "avatar": "wolf",
       "stats": {
-        "gamesPlayed": 0,
+        "gamesPlayed": 1,
         "gamesWon": 0,
-        "gamesLost": 0,
+        "gamesLost": 1,
         "unoCalls": 0,
-        "longestWinStreak": 0,
         "currentWinStreak": 0,
-        "totalCardsPlayed": 0,
+        "longestWinStreak": 0,
+        "totalCardsPlayed": 9,
         "totalPoints": 0
       },
       "createdAt": "2026-09-22T01:50:22.537Z",
-      "updatedAt": "2026-09-22T01:50:22.537Z"
+      "updatedAt": "2026-09-27T10:22:25.462Z"
     }
   ],
   "rooms": [
@@ -76,9 +76,219 @@
       "createdAt": "2026-09-22T01:50:57.488Z",
       "updatedAt": "2026-09-22T01:51:09.302Z",
       "gameId": "ca9710f7-52f4-4fe1-8cf1-f975ab73af45"
+    },
+    {
+      "id": "f83b2722-558c-426d-80cc-c846d3fd9549",
+      "code": "AWYEMB",
+      "name": "Quick Match",
+      "hostId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+      "maxPlayers": 2,
+      "mode": "classic",
+      "isPrivate": true,
+      "status": "closed",
+      "players": [],
+      "createdAt": "2026-09-27T10:20:07.333Z",
+      "updatedAt": "2026-09-27T10:22:42.734Z"
     }
   ],
   "games": [],
-  "gameHistory": [],
+  "gameHistory": [
+    {
+      "id": "170cb84a-fdad-4a01-8936-caa2056ec2b8",
+      "gameId": "3055ff70-18c1-43b5-b96d-93d18e74f027",
+      "roomCode": "AWYEMB",
+      "mode": "classic",
+      "winnerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+      "winnerUsername": "sachin",
+      "playerIds": [
+        "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+        "41cc1913-3f10-49c5-9e4b-8f8e77de1347"
+      ],
+      "players": [
+        {
+          "id": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+          "username": "Sachinbudni",
+          "avatar": "wolf",
+          "cardsLeft": 4,
+          "points": 13,
+          "cardsPlayed": 9,
+          "unoCalls": 0,
+          "isWinner": false
+        },
+        {
+          "id": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "username": "sachin",
+          "avatar": "fox",
+          "cardsLeft": 0,
+          "points": 0,
+          "cardsPlayed": 11,
+          "unoCalls": 1,
+          "isWinner": true
+        }
+      ],
+      "moves": [
+        {
+          "playerId": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+          "action": "play_card",
+          "cardId": "761cbc24-6521-421d-8a5c-9c3f1e23db61",
+          "timestamp": "2026-09-27T10:20:12.588Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "turn_timeout",
+          "timestamp": "2026-09-27T10:20:42.598Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "play_card",
+          "cardId": "6ae11998-1ea2-4af7-9036-0562a6455f42",
+          "color": "yellow",
+          "timestamp": "2026-09-27T10:20:42.599Z"
+        },
+        {
+          "playerId": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+          "action": "accept_draw_four",
+          "count": 4,
+          "timestamp": "2026-09-27T10:20:47.149Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "play_card",
+          "cardId": "56108d5c-4f3b-4086-b33b-18c1a01802c4",
+          "timestamp": "2026-09-27T10:20:58.178Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "play_card",
+          "cardId": "ff2b5011-477e-4f22-a817-f944c3773fb6",
+          "timestamp": "2026-09-27T10:21:06.485Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "turn_timeout",
+          "timestamp": "2026-09-27T10:21:36.491Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "play_card",
+          "cardId": "5eb697d9-2d64-4998-b74c-d183d5f4f65c",
+          "timestamp": "2026-09-27T10:21:36.492Z"
+        },
+        {
+          "playerId": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+          "action": "play_card",
+          "cardId": "4836e723-6331-4c96-ad88-24ed2f87042e",
+          "timestamp": "2026-09-27T10:21:44.050Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "draw_card",
+          "count": 1,
+          "timestamp": "2026-09-27T10:21:47.517Z"
+        },
+        {
+          "playerId": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+          "action": "play_card",
+          "cardId": "62ee8eb2-3774-4534-851c-d6bfa1a64139",
+          "timestamp": "2026-09-27T10:21:50.227Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "play_card",
+          "cardId": "b079f9d2-e7ad-4a8a-976c-6ce5351226b4",
+          "timestamp": "2026-09-27T10:21:51.733Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "play_card",
+          "cardId": "4cbd9551-2310-4bd8-a0a9-5e2734fa0032",
+          "timestamp": "2026-09-27T10:21:52.686Z"
+        },
+        {
+          "playerId": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+          "action": "play_card",
+          "cardId": "d65aa85d-fb91-489b-8425-f961f0669128",
+          "timestamp": "2026-09-27T10:21:55.082Z"
+        },
+        {
+          "playerId": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+          "action": "play_card",
+          "cardId": "2b5d8464-be51-4405-8358-e0dc0a2dacbe",
+          "timestamp": "2026-09-27T10:21:58.402Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "play_card",
+          "cardId": "c3429018-0558-4bdf-80e2-40e14b7330f9",
+          "timestamp": "2026-09-27T10:22:01.354Z"
+        },
+        {
+          "playerId": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+          "action": "play_card",
+          "cardId": "18f3858b-2b82-4ac3-bc07-debb351a3da1",
+          "timestamp": "2026-09-27T10:22:03.394Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "draw_card",
+          "count": 1,
+          "timestamp": "2026-09-27T10:22:05.595Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "play_card",
+          "cardId": "5f9d9b0a-12e6-4ea3-a068-b2e9bb9cfaa1",
+          "timestamp": "2026-09-27T10:22:06.666Z"
+        },
+        {
+          "playerId": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+          "action": "play_card",
+          "cardId": "1d01cd64-36b3-431b-a3da-52013e2f4fee",
+          "color": "red",
+          "timestamp": "2026-09-27T10:22:09.670Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "play_card",
+          "cardId": "7731b0c4-827f-4231-9ee2-86fd1e84d145",
+          "timestamp": "2026-09-27T10:22:16.008Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "play_card",
+          "cardId": "a7fc1b93-ce91-446c-b12c-0197fd6bc8f5",
+          "timestamp": "2026-09-27T10:22:16.792Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "call_uno",
+          "timestamp": "2026-09-27T10:22:17.903Z"
+        },
+        {
+          "playerId": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+          "action": "play_card",
+          "cardId": "6122a131-3eb9-4610-99b8-069604fac87d",
+          "timestamp": "2026-09-27T10:22:22.188Z"
+        },
+        {
+          "playerId": "1066c135-d584-4c8a-9c80-7e78fe657d5d",
+          "action": "play_card",
+          "cardId": "e1f01eb6-81ae-4e87-be2a-497cfbcdef38",
+          "timestamp": "2026-09-27T10:22:22.785Z"
+        },
+        {
+          "playerId": "41cc1913-3f10-49c5-9e4b-8f8e77de1347",
+          "action": "play_card",
+          "cardId": "5b86892c-84d6-4200-9b7a-a5a1eac1699d",
+          "timestamp": "2026-09-27T10:22:25.356Z"
+        }
+      ],
+      "moveCount": 26,
+      "durationMs": 135941,
+      "startedAt": "2026-09-27T10:20:09.415Z",
+      "finishedAt": "2026-09-27T10:22:25.356Z",
+      "createdAt": "2026-09-27T10:22:25.362Z"
+    }
+  ],
   "leaderboard": []
 }
