@@ -479,10 +479,17 @@ export class GameEngine {
       return this.acceptDrawFour(challenge.targetPlayerId);
     }
 
-    // A drawn card left unplayed ends the turn.
+    // A card already drawn is played if it is legal, otherwise the turn ends.
+    // Holding it for a second full timeout would stall the table twice over.
     const drawn = this.state.drawnCard;
     if (drawn) {
+      const player = findPlayer(this.state, drawn.playerId);
+      const card = player?.hand.find((entry) => entry.id === drawn.cardId);
       this.recordMove(drawn.playerId, 'turn_timeout', {});
+      if (card) {
+        const color = isWildCard(card) ? this.mostCommonColorIn(player) ?? 'red' : undefined;
+        return this.playCard(drawn.playerId, card.id, color);
+      }
       return this.pass(drawn.playerId);
     }
 
@@ -497,6 +504,17 @@ export class GameEngine {
     const active = currentPlayer(this.state);
     if (!active) return { events: [] };
     this.recordMove(active.id, 'turn_timeout', {});
+
+    // Play for them when they have a legal move. Drawing instead would punish a
+    // player who could have played, and - because nobody ever sheds a card - an
+    // idle table's hands would grow forever and the game could never end.
+    const choice = this.autoPlayChoice(active);
+    if (choice) {
+      const color = isWildCard(choice) ? this.mostCommonColorIn(active) ?? 'red' : undefined;
+      return this.playCard(active.id, choice.id, color);
+    }
+
+    // No legal move: the rules say draw.
     return this.drawCard(active.id);
   }
 
@@ -702,6 +720,22 @@ export class GameEngine {
       unoCalls: player.unoCalls,
       isWinner: player.id === winnerId,
     }));
+  }
+
+  /**
+   * The card to play on someone's behalf when their clock runs out. Prefers an
+   * ordinary card so the server is not choosing a colour for them, and leaves
+   * Wild Draw Four until last - auto-playing it could be an accidental bluff
+   * that a challenge then punishes.
+   */
+  private autoPlayChoice(player: Player): Card | null {
+    const legal = this.playableCardsFor(player.id);
+    if (legal.length === 0) return null;
+    return (
+      legal.find((card) => !isWildCard(card)) ??
+      legal.find((card) => card.type === 'wild') ??
+      legal[0]
+    );
   }
 
   private mostCommonColorIn(player: Player | undefined): PlayableColor | null {

@@ -715,13 +715,87 @@ describe('winning', () => {
 });
 
 describe('turn timeout', () => {
-  it('draws for a player who runs out of time', () => {
-    const { engine } = table({ hands: [[num('blue', 1)], [num('green', 2)]] });
+  it('draws only when the player has no legal move', () => {
+    // BLUE 1 cannot follow RED 7, so drawing is the correct move.
+    const { engine } = table({ hands: [[num('blue', 1)], [num('green', 2)]], top: num('red', 7) });
 
     engine.handleTurnTimeout();
 
     expect(handOf(engine, 'p1')).toHaveLength(2);
     expect(currentId(engine)).toBe('p2');
+  });
+
+  it('plays a legal card rather than dealing another one out', () => {
+    // Regression: the timeout used to draw even with playable cards in hand, so
+    // an idle table's hands grew forever and no game could ever end.
+    const playable = num('red', 3);
+    const { engine } = table({ hands: [[playable, num('blue', 9)], [num('green', 2)]], top: num('red', 7) });
+
+    engine.handleTurnTimeout();
+
+    expect(topOf(engine).id).toBe(playable.id);
+    expect(handOf(engine, 'p1')).toHaveLength(1);
+    expect(currentId(engine)).toBe('p2');
+  });
+
+  it('prefers an ordinary card, so it is not choosing a colour for them', () => {
+    const wild = card('wild', 'wild');
+    const plain = num('red', 3);
+    const { engine } = table({ hands: [[wild, plain], [num('green', 2)]], top: num('red', 7) });
+
+    engine.handleTurnTimeout();
+
+    expect(topOf(engine).id).toBe(plain.id);
+  });
+
+  it('leaves Wild Draw Four until last, to avoid an accidental bluff', () => {
+    const wild4 = card('wild', 'wild_draw4');
+    const wild = card('wild', 'wild');
+    const { engine } = table({ hands: [[wild4, wild], [num('green', 2)]], top: num('red', 7) });
+
+    engine.handleTurnTimeout();
+
+    expect(topOf(engine).id).toBe(wild.id);
+    expect(engine.state.pendingWildDrawFour).toBeUndefined();
+  });
+
+  it('plays a card that was drawn rather than stalling the table twice', () => {
+    // Drawing kept the turn, so a second timeout was needed just to pass it on.
+    const { engine } = table({
+      hands: [[num('blue', 1)], [num('green', 2)]],
+      top: num('red', 7),
+      deck: [num('red', 4)],
+    });
+
+    engine.handleTurnTimeout();
+    expect(engine.state.drawnCard?.playerId).toBe('p1');
+
+    engine.handleTurnTimeout();
+    expect(engine.state.drawnCard).toBeUndefined();
+    expect(topOf(engine).value).toBe(4);
+    expect(currentId(engine)).toBe('p2');
+  });
+
+  it('lets a wholly idle table finish instead of growing without bound', () => {
+    const engine = GameEngine.create({
+      roomId: 'r-idle',
+      roomCode: 'IDLE01',
+      seats: [
+        { id: 'p1', username: 'Sachin' },
+        { id: 'p2', username: 'Rahul' },
+      ],
+      rules: { turnTimeoutSeconds: 30 },
+    });
+    if (engine.state.pendingColorChoice) engine.chooseColor('p1', 'red');
+
+    const dealt = engine.state.players.reduce((total, player) => total + player.hand.length, 0);
+
+    // Nobody ever acts; only the clock does.
+    for (let i = 0; i < 300 && !engine.isFinished; i++) engine.handleTurnTimeout();
+
+    expect(engine.isFinished).toBe(true);
+    const left = engine.state.players.reduce((total, player) => total + player.hand.length, 0);
+    expect(left).toBeLessThan(dealt);
   });
 
   it('picks a colour for a stalled wild', () => {

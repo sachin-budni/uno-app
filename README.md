@@ -534,9 +534,14 @@ becomes the new deck.
 remaining cards are scored the standard way — number cards face value, Draw Two / Reverse / Skip 20,
 Wild and Wild Draw Four 50 — and the total goes to the winner.
 
-**Turn clock** — 30 seconds by default (15 in Fast mode). When it expires the server acts for you:
-it answers a pending Wild Draw Four, picks a colour, passes a drawn card, or draws. Set
-`TURN_TIMEOUT_SECONDS=0` to switch it off.
+**Turn clock** — 30 seconds by default (15 in Fast mode). When it expires the server takes your turn
+for you, in the order a player would: it answers a pending Wild Draw Four, plays a card you already
+drew, picks a colour for a stalled wild, **plays a legal card if you hold one**, and only draws when
+you genuinely have no move. It prefers an ordinary card over a wild, and leaves Wild Draw Four until
+last so it never bluffs on your behalf. Set `TURN_TIMEOUT_SECONDS=0` to switch the clock off.
+
+That "play if you can" step matters: drawing on every timeout meant an idle table's hands only ever
+grew, so the game could never reach an end.
 
 **Game modes** — `classic` (7 cards, 30s), `fast` (5 cards, 15s), `stacking` (draw stacking on).
 
