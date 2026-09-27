@@ -82,6 +82,26 @@ describe('WinnerOverlayComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
+  it('emits backToLobby rather than navigating on its own', () => {
+    // A bare routerLink here left the finished state set, so the overlay
+    // reappeared on top of the next game.
+    fixture.componentRef.setInput('result', RESULT);
+    fixture.componentRef.setInput('myPlayerId', 'me');
+    fixture.detectChanges();
+
+    const spy = jasmine.createSpy('backToLobby');
+    fixture.componentInstance.backToLobby.subscribe(spy);
+
+    const button = Array.from(host().querySelectorAll('button')).find((element) =>
+      element.textContent?.includes('Back to lobby'),
+    );
+    expect(button).withContext('Back to lobby should be a button, not a link').toBeDefined();
+    button!.click();
+
+    expect(spy).toHaveBeenCalled();
+    expect(host().querySelector('a[href="/lobby"]')).toBeNull();
+  });
+
   it('handles an abandoned game with no winner', () => {
     fixture.componentRef.setInput('result', { ...RESULT, winnerId: null, winnerUsername: null });
     fixture.detectChanges();

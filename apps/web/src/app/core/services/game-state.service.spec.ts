@@ -255,6 +255,48 @@ describe('GameStateService', () => {
     });
   });
 
+  describe('the winner overlay belongs to one game', () => {
+    const finishFor = (gameId: string) => ({
+      gameId,
+      winnerId: 'me',
+      winnerUsername: 'Sachin',
+      durationMs: 1000,
+      results: [],
+    });
+
+    it('drops a finish from a previous game when a new game arrives', async () => {
+      await service.loadGame('g1');
+      service.finished.set(finishFor('g1'));
+      expect(service.finished()).not.toBeNull();
+
+      // Joining a different game must not inherit the old result.
+      socket.requestGameState.and.resolveTo({ state: stateFixture({ gameId: 'g2' }) });
+      await service.loadGame('g2');
+
+      expect(service.finished()).toBeNull();
+    });
+
+    it('keeps the finish while state for that same game keeps arriving', async () => {
+      await service.loadGame('g1');
+      service.finished.set(finishFor('g1'));
+
+      socket.requestGameState.and.resolveTo({ state: stateFixture({ status: 'finished' }) });
+      await service.loadGame('g1');
+
+      expect(service.finished()).not.toBeNull();
+    });
+
+    it('is cleared on reset, which is what leaving the table does', async () => {
+      await service.loadGame('g1');
+      service.finished.set(finishFor('g1'));
+
+      service.reset();
+
+      expect(service.finished()).toBeNull();
+      expect(service.gameState()).toBeNull();
+    });
+  });
+
   describe('discard animation state', () => {
     // A played card must arrive as a *new* entry keyed by its id, otherwise
     // Angular reuses the DOM node and the landing animation never replays.

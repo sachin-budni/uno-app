@@ -324,6 +324,15 @@ export class GameStateService {
   /** Clears everything when leaving the table. */
   reset(): void {
     this.gameState.set(null);
+    this.clearForNewGame();
+  }
+
+  /**
+   * Drops everything tied to a particular game while leaving the connection
+   * alone. Used both when leaving the table and when state for a different
+   * game arrives.
+   */
+  private clearForNewGame(): void {
     this.finished.set(null);
     this.feed.set([]);
     this.lastPlayedCardId.set(null);
@@ -349,6 +358,11 @@ export class GameStateService {
   }
 
   private applyState(state: ClientGameState): void {
+    // A finish belongs to the game it came from. Seeing state for a different
+    // game means we have moved on, so drop anything left over - otherwise the
+    // winner overlay from the last game reappears on top of the new one.
+    if (this.finished() && this.finished()!.gameId !== state.gameId) this.clearForNewGame();
+
     this.gameState.set(state);
     this.trackDiscard(state);
 

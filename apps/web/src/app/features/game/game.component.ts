@@ -354,6 +354,7 @@ const COLOR_DOT: Record<string, string> = {
       [result]="finished()"
       [myPlayerId]="myPlayerId()"
       (playAgain)="playAgain()"
+      (backToLobby)="leave()"
     />
   `,
 })
@@ -483,7 +484,10 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    // Covers every way out of the table - Play again, Back to lobby, the
+    // browser back button - so no game state outlives the view.
     this.pendingWild.set(null);
+    this.game.reset();
   }
 
   private async load(): Promise<void> {

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { LucideRefreshCw, LucideTrophy } from '@lucide/angular';
 import type { GameFinishedPayload } from '../../core/models/game.models';
 import { AvatarComponent } from '../../shared/components/avatar.component';
@@ -8,7 +7,7 @@ import { DurationPipe } from '../../shared/pipes/format.pipes';
 /** End-of-game screen: who won, the final scores, and what to do next. */
 @Component({
   selector: 'app-winner-overlay',
-  imports: [RouterLink, AvatarComponent, DurationPipe, LucideRefreshCw, LucideTrophy],
+  imports: [AvatarComponent, DurationPipe, LucideRefreshCw, LucideTrophy],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (result(); as summary) {
@@ -80,7 +79,9 @@ import { DurationPipe } from '../../shared/pipes/format.pipes';
               <svg lucideRefreshCw class="h-4 w-4" aria-hidden="true"></svg>
               Play again
             </button>
-            <a routerLink="/lobby" class="btn-secondary btn-lg flex-1">Back to lobby</a>
+            <button type="button" class="btn-secondary btn-lg flex-1" (click)="backToLobby.emit()">
+              Back to lobby
+            </button>
           </div>
         </div>
       </div>
@@ -91,6 +92,7 @@ export class WinnerOverlayComponent {
   readonly result = input<GameFinishedPayload | null>(null);
   readonly myPlayerId = input<string | null>(null);
   readonly playAgain = output<void>();
+  readonly backToLobby = output<void>();
 
   readonly iWon = computed(() => !!this.myPlayerId() && this.result()?.winnerId === this.myPlayerId());
 
